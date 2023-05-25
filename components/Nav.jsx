@@ -4,7 +4,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { getProviders, signIn, signOut, useSession } from "next-auth/react";
 const Nav = () => {
-  const {data: session} = useSession()
+  const { data: session } = useSession();
 
   const [providers, setProviders] = useState(null);
   const [toggleDropdown, setToggleDropdown] = useState(false);
@@ -41,7 +41,7 @@ const Nav = () => {
             </button>
             <Link href="/profile">
               <Image
-              src={session?.user.image}
+                src={session?.user.image}
                 width={37}
                 height={37}
                 className="rounded-full"
@@ -56,7 +56,10 @@ const Nav = () => {
                 <button
                   type="button"
                   key={provider.name}
-                  onClick={() => signIn(provider.id)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    signIn(provider.id);
+                  }}
                   className="black_btn"
                 >
                   Sign In
@@ -113,7 +116,10 @@ const Nav = () => {
                 <button
                   type="button"
                   key={provider.name}
-                  onClick={() => signIn(provider.id)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    signIn(provider.id);
+                  }}
                   className="black_btn"
                 >
                   Sign In
