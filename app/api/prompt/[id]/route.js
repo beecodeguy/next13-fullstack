@@ -3,7 +3,6 @@ import { connectToDB } from "@utils/database";
 
 // GET
 export const GET = async (req, { params }) => {
-  console.log('params----', params)
   try {
     await connectToDB();
     const prompt = await Prompt.findById(params.id).populate("creator");

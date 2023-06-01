@@ -14,7 +14,6 @@ const MyProfile = () => {
     const fetchPosts = async () => {
       const res = await fetch(`/api/users/${session?.user.id}/posts`);
       const data = await res.json();
-      console.log(data);
       setPosts(data);
     };
     if (session?.user.id) {
@@ -23,12 +22,24 @@ const MyProfile = () => {
   }, []);
 
   const handleEdit = (post) => {
-    router.push(`/update-prompt?id=${post._id}`)
+    router.push(`/update-prompt?id=${post._id}`);
   };
 
-  const handleDelete = async (post) => {};
+  const handleDelete = async (post) => {
+    const hasConfirmed = confirm("Are you sure to Delete???");
+    if (hasConfirmed) {
+      try {
+        await fetch(`/api/prompt/${post._id.toString()}`, {
+          method: "DELETE",
+        });
 
-  console.log(posts);
+        const filteredPosts = posts.filter((p) => p._id !== post._id);
+        setPosts(filteredPosts);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
   return (
     <Profile
